@@ -1,0 +1,104 @@
+/* ============================================================
+   SAIM AI AGENT — site.css (consolidated marketing stylesheet)
+   For marketing pages (features, models, pricing, guide,
+   changelog). All selectors scoped to body.site so this file
+   never conflicts with the workspace stylesheet (app.css).
+   Replaces the old site.css + polish-v2.css pair.
+   Theme: dark by default, light via <html data-theme="light">.
+   ============================================================ */
+
+body.site {
+  background: #07060d;
+  color: #f4f4f5;
+  font-family: Inter, 'Noto Sans Bengali', -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+body.site .grad {
+  background: linear-gradient(135deg, #a78bfa, #22d3ee);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+body.site .card {
+  background: rgba(255, 255, 255, .04);
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 20px;
+  padding: 20px;
+}
+body.site .card.ring { border-color: #a78bfa; box-shadow: 0 0 0 1px #a78bfa, 0 20px 50px rgba(139, 92, 246, .18); }
+
+body.site .sec { font-size: 1.4rem; font-weight: 800; margin-bottom: 1rem; }
+
+body.site .tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+body.site .tag.live { background: rgba(52, 211, 153, .15); color: #6ee7b7; }
+body.site .tag.road { background: rgba(251, 191, 36, .15); color: #fcd34d; }
+
+body.site .price { font-size: 2rem; font-weight: 800; margin: .5rem 0; }
+
+body.site .list { margin-top: .75rem; display: grid; gap: .5rem; font-size: .85rem; color: #d4d4d8; }
+body.site .list li { padding-left: 1.1rem; position: relative; }
+body.site .list li:before {
+  content: ''; position: absolute; left: 0; top: .5em;
+  width: 6px; height: 6px; border-radius: 99px; background: #a78bfa;
+}
+
+body.site .cta, body.site .cta-ghost {
+  display: inline-block; padding: .8rem 1.6rem; border-radius: 14px;
+  font-weight: 600; font-size: .9rem;
+}
+body.site .cta { background: linear-gradient(135deg, #8b5cf6, #06b6d4); color: #fff; }
+body.site .cta:hover { filter: brightness(1.1); }
+body.site .cta-ghost { margin-top: 1.25rem; border: 1px solid rgba(255, 255, 255, .2); color: #fff; }
+body.site .cta-ghost:hover { background: rgba(255, 255, 255, .08); }
+
+/* tables (pricing page) */
+body.site table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+body.site th { text-align: left; color: #a1a1aa; font-weight: 600; padding: .5rem .75rem .5rem 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+body.site td { padding: .5rem .75rem .5rem 0; border-bottom: 1px solid rgba(255,255,255,.05); }
+
+/* ---------- Theme toggle button ---------- */
+body.site .theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; padding: 0; flex: 0 0 36px;
+  border: 1px solid rgba(255, 255, 255, .15); border-radius: 12px;
+  background: rgba(255, 255, 255, .06); color: #e4e4e7;
+  cursor: pointer; transition: background .15s, border-color .15s;
+}
+body.site .theme-toggle:hover { background: rgba(255, 255, 255, .12); }
+body.site .theme-toggle svg { width: 17px; height: 17px; }
+body.site .theme-toggle .icon-sun { display: none; }
+body.site .theme-toggle .icon-moon { display: block; }
+
+/* ---------- Light theme ---------- */
+html[data-theme="light"] body.site { background: #fafafa; color: #18181b; }
+html[data-theme="light"] body.site .grad {
+  background: linear-gradient(135deg, #7c3aed, #0891b2);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+html[data-theme="light"] body.site .card { background: #fff; border-color: rgba(0, 0, 0, .1); box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+html[data-theme="light"] body.site .card.ring { border-color: #7c3aed; box-shadow: 0 0 0 1px #7c3aed, 0 20px 50px rgba(124, 58, 237, .12); }
+html[data-theme="light"] body.site .list { color: #3f3f46; }
+html[data-theme="light"] body.site .list li:before { background: #7c3aed; }
+html[data-theme="light"] body.site .cta-ghost { border-color: rgba(0, 0, 0, .2); color: #18181b; }
+html[data-theme="light"] body.site .cta-ghost:hover { background: rgba(0, 0, 0, .05); }
+html[data-theme="light"] body.site th { color: #52525b; border-bottom-color: rgba(0,0,0,.15); }
+html[data-theme="light"] body.site td { border-bottom-color: rgba(0,0,0,.08); }
+html[data-theme="light"] body.site .theme-toggle { border-color: rgba(0,0,0,.15); background: rgba(0,0,0,.05); color: #27272a; }
+html[data-theme="light"] body.site .theme-toggle:hover { background: rgba(0,0,0,.1); }
+html[data-theme="light"] body.site .theme-toggle .icon-sun { display: block; }
+html[data-theme="light"] body.site .theme-toggle .icon-moon { display: none; }
+html[data-theme="light"] body.site .tag.live { background: rgba(5, 150, 105, .12); color: #047857; }
+html[data-theme="light"] body.site .tag.road { background: rgba(180, 83, 9, .12); color: #b45309; }
+
+/* Light-mode remaps for the dark Tailwind utilities used by the marketing pages */
+html[data-theme="light"] body.site header { background: rgba(255, 255, 255, .72) !important; border-bottom-color: rgba(0, 0, 0, .08) !important; }
+html[data-theme="light"] body.site footer { border-top-color: rgba(0, 0, 0, .08) !important; color: #71717a !important; }
+html[data-theme="light"] body.site .text-zinc-100, html[data-theme="light"] body.site .text-white { color: #18181b !important; }
+html[data-theme="light"] body.site .text-zinc-300, html[data-theme="light"] body.site .text-zinc-400 { color: #52525b !important; }
+html[data-theme="light"] body.site .text-zinc-500 { color: #71717a !important; }
+html[data-theme="light"] body.site .bg-white\/10 { background: rgba(0, 0, 0, .07) !important; }
+html[data-theme="light"] body.site .bg-white\/5 { background: rgba(0, 0, 0, .04) !important; }
+html[data-theme="light"] body.site .hover\:text-white:hover { color: #18181b !important; }
+html[data-theme="light"] body.site .border-white\/10 { border-color: rgba(0, 0, 0, .1) !important; }
+/* keep the Login button readable in light mode: white pill with dark text */
+html[data-theme="light"] body.site a[href="index.html#/login"] { background: #18181b !important; color: #fff !important; }
