@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>SAIM AI AGENT — Autonomous AI Workspace</title>
+<meta name="description" content="SAIM AI AGENT — the autonomous studio for every AI model. Auto-handoff, voice AI, live preview and GitHub push." />
+<link rel="icon" type="image/svg+xml" href="logo.svg" />
+<meta name="theme-color" content="#14121f" />
+<meta name="referrer" content="no-referrer" />
+<script>
+  /* Restore the saved theme before first paint (dark is the default). */
+  (function () {
+    try {
+      var t = localStorage.getItem('saim-theme');
+      document.documentElement.setAttribute('data-theme', (t === 'light' || t === 'dark') ? t : 'dark');
+    } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+  })();
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = { theme: { extend: {
+    fontFamily: { sans: ['-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans Bengali','sans-serif'], mono: ['ui-monospace','SFMono-Regular','Consolas','Liberation Mono','monospace'] },
+    colors: { ink: { 950:'#060606', 900:'#0a0a0a', 850:'#0e0e0e', 800:'#121212', 700:'#191919' } }
+  } } };
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+
+<link rel="stylesheet" href="css/app.css" />
+</head>
+
+<body class="overflow-x-hidden antialiased bg-ink-950 text-zinc-100">
+
+<div id="bootSplash" aria-hidden="true"><div class="bs-box"><div class="bs-logo"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div class="bs-spin"></div></div></div>
+
+<noscript><div style="padding:24px;text-align:center;color:#fff;background:#0a0a0a">Please enable JavaScript to use SAIM AI AGENT.</div></noscript>
+
+<div id="landing" class="hidden relative min-h-[100dvh] overflow-x-hidden flex flex-col">
+  <div class="blob w-[420px] h-[420px] bg-purple-600 -top-24 -left-24"></div>
+  <div class="blob w-[380px] h-[380px] bg-cyan-500 top-1/3 -right-24"></div>
+  <header class="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-8 py-5 flex items-center justify-between gap-3">
+    <a href="#/home" class="flex items-center gap-3 min-w-0">
+      <div class="w-10 h-10 rounded-2xl overflow-hidden glass grid place-items-center shrink-0">
+        <img src="logo.svg" alt="SAIM AI AGENT logo" class="w-full h-full object-cover" onerror="this.remove()" />
+      </div>
+      <div class="min-w-0"><div class="font-extrabold text-lg leading-tight truncate">SAIM <span class="grad-text">AI AGENT</span></div><div class="text-[10px] text-zinc-500 font-mono">UNIVERSAL SUITE</div></div>
+    </a>
+    <nav class="hidden md:flex items-center gap-6 text-sm text-zinc-300" aria-label="Main">
+      <a href="features.html" class="hover:text-white">Features</a>
+      <a href="models.html" class="hover:text-white">Models</a>
+      <a href="pricing.html" class="hover:text-white">Pricing</a>
+      <a href="guide.html" class="hover:text-white">How to use</a>
+      <a href="changelog.html" class="hover:text-white">What&apos;s new</a>
+    </nav>
+    <button type="button" id="landingCta" data-action="launch" class="shrink-0 inline-flex items-center gap-2 text-xs font-semibold px-4 py-2.5 rounded-xl bg-white text-ink-950 hover:bg-zinc-200">Login / Sign Up <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></button>
+  </header>
+  <main class="relative z-10 flex-1 max-w-6xl mx-auto w-full px-4 sm:px-8 pt-8 sm:pt-14 pb-10">
+    <section class="text-center">
+      <div class="hero-badge"><b>NEW</b> SAIM AI AGENT 4.0 — Multi-model agents, your keys or credits</div>
+      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">The Autonomous Studio for <span class="grad-text">Every AI Model.</span></h1>
+      <p class="mt-6 text-base sm:text-lg text-zinc-300 min-h-[1.75rem]"><span id="dynamicSubtitle" class="caret"></span></p>
+      <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button type="button" data-action="launch" class="hero-cta w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 font-semibold"><i data-lucide="rocket" class="w-4 h-4"></i> Get Started Free</button>
+        <a href="pricing.html" class="hero-ghost w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 font-medium"><i data-lucide="coins" class="w-4 h-4"></i> See pricing</a>
+      </div>
+      <div class="hero-stats" aria-label="Highlights">
+        <div><strong>50K</strong><span>Free tokens</span></div>
+        <div><strong>10+</strong><span>AI providers</span></div>
+        <div><strong>BN · EN</strong><span>Voice AI</span></div>
+      </div>
+    </section>
+
+    <section class="mt-16" aria-label="Explore">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 text-left">
+        <a href="features.html" class="glass rounded-2xl p-5 hover:border-white/30"><i data-lucide="sparkles" class="w-5 h-5 text-purple-300 mb-3"></i><div class="font-semibold text-sm">Features</div><div class="text-[11px] text-zinc-400 mt-1">Everything live and coming soon</div></a>
+        <a href="models.html" class="glass rounded-2xl p-5 hover:border-white/30"><i data-lucide="cpu" class="w-5 h-5 text-cyan-300 mb-3"></i><div class="font-semibold text-sm">Models</div><div class="text-[11px] text-zinc-400 mt-1">Claude, Gemini, GPT, Grok, Kimi</div></a>
+        <a href="pricing.html" class="glass rounded-2xl p-5 hover:border-white/30"><i data-lucide="coins" class="w-5 h-5 text-amber-300 mb-3"></i><div class="font-semibold text-sm">Pricing</div><div class="text-[11px] text-zinc-400 mt-1">Plans, credits and benefits</div></a>
+        <a href="guide.html" class="glass rounded-2xl p-5 hover:border-white/30"><i data-lucide="book-open" class="w-5 h-5 text-emerald-300 mb-3"></i><div class="font-semibold text-sm">How to use</div><div class="text-[11px] text-zinc-400 mt-1">Step-by-step guide</div></a>
+        <a href="changelog.html" class="glass rounded-2xl p-5 hover:border-white/30"><i data-lucide="megaphone" class="w-5 h-5 text-pink-300 mb-3"></i><div class="font-semibold text-sm">What&apos;s new</div><div class="text-[11px] text-zinc-400 mt-1">Latest updates</div></a>
+      </div>
+    </section>
+  </main>
+  <footer class="relative z-10 border-t border-white/5 py-6 text-center text-xs text-zinc-500">
+    <nav class="flex justify-center gap-5 mb-3" aria-label="Footer"><a href="features.html" class="hover:text-white">Features</a><a href="models.html" class="hover:text-white">Models</a><a href="pricing.html" class="hover:text-white">Pricing</a><a href="changelog.html" class="hover:text-white">What&apos;s new</a></nav>
+    &copy; <span id="year"></span> SAIM AI AGENT</footer>
+</div>
+
+<div id="app" class="hidden flex h-[100dvh] flex-col bg-ink-950">
+
+  <!-- ===== Topbar (4445: topbar-start | center | topbar-actions) ===== -->
+  <header class="topbar">
+    <div class="topbar-start">
+      <button type="button" id="btnSidebar" class="ibtn" aria-label="Menu"><i data-lucide="panel-left"></i></button>
+      <button type="button" data-action="home" class="brand" aria-label="Home">
+        <span class="brand-mark"><img src="logo.svg" alt="" onerror="this.remove()" /></span>
+        <span class="brand-name hidden sm:inline">SAIM<span>/agent</span></span>
+      </button>
+    </div>
+
+    <div class="topbar-center">
+      <button type="button" id="btnActiveModel" class="model-pill" aria-label="Select AI model">
+        <i data-lucide="cpu" class="shrink-0"></i>
+        <span id="activeModelLabel" class="truncate font-mono">SAIM Free · Medium</span>
+        <span id="autoSelectedBadge" class="hidden auto-selected-badge">AUTO</span>
+        <i data-lucide="chevrons-up-down" class="shrink-0 chev"></i>
+      </button>
+    </div>
+
+    <div class="topbar-actions">
+      <div class="relative shrink-0">
+        <button type="button" data-dd class="pill-btn" aria-label="Select agent">
+          <i data-lucide="bot"></i><span id="activeAgentLabel" class="hidden md:inline"></span><i data-lucide="chevron-down" class="chev"></i>
+        </button>
+        <div id="agentDropdown" class="ddmenu hidden absolute right-0 mt-2 w-64 max-w-[calc(100vw-1rem)] rounded-2xl bg-ink-900 border border-white/10 shadow-2xl p-1.5 z-50 fade-in"></div>
+      </div>
+      <button type="button" data-action="guide" class="ibtn relative" aria-label="SAIM AI AGENT" title="Assistant"><i data-lucide="sparkles"></i><span class="notify-dot"></span></button>
+
+      <button type="button" id="btnThemeToggle" class="ibtn" aria-label="Toggle light/dark theme" title="Toggle theme"><i data-lucide="sun-moon"></i></button>
+
+      <!-- SAIM Free token badge (data comes from the server) -->
+      <button type="button" id="freeTokenBadge" class="hidden sm:inline-flex shrink-0 items-center gap-1.5 pill-btn mono" aria-label="Free Tokens" title="SAIM Free tokens remaining">
+        <i data-lucide="zap"></i><span id="freeTokenCount">50,000</span>
+      </button>
+
+      <button type="button" id="walletBadge" class="hidden shrink-0 inline-flex items-center gap-1.5 pill-btn mono" aria-label="Credits" title="Credits / Top-up">
+        <i data-lucide="coins"></i><span id="walletBalance">--</span>
+      </button>
+      <div class="relative shrink-0">
+        <button type="button" data-dd class="pill-btn avatar-pill" aria-label="Account">
+          <span id="avatarBtn" class="w-7 h-7 rounded-lg overflow-hidden bg-gradient-to-tr from-purple-500 to-cyan-400 grid place-items-center text-white text-xs font-bold">U</span>
+        </button>
+        <div class="ddmenu hidden absolute right-0 mt-2 w-60 max-w-[calc(100vw-1rem)] rounded-2xl bg-ink-900 border border-white/10 shadow-2xl p-1.5 z-50 text-xs text-zinc-300 fade-in">
+          <div class="px-3 py-2 border-b border-white/5 mb-1"><div id="authBox"></div><div id="modeStatusBadge" class="text-[10px] text-amber-300 mt-1"></div></div>
+          <button type="button" data-open="#modalPatch" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/10 text-left"><i data-lucide="binary" class="w-3.5 h-3.5 text-cyan-400"></i> Surgical Code Patcher</button>
+          <button type="button" data-open="#modalGithub" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/10 text-left"><i data-lucide="github" class="w-3.5 h-3.5"></i> Push to GitHub</button>
+          <button type="button" data-action="settings" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/10 text-left"><i data-lucide="sliders" class="w-3.5 h-3.5 text-amber-400"></i> Advanced Settings</button>
+          <button type="button" data-action="keys" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/10 text-left"><i data-lucide="key" class="w-3.5 h-3.5 text-emerald-400"></i> All AI API Keys</button>
+          <button type="button" id="btnWalletOpen" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/10 text-left"><i data-lucide="wallet" class="w-3.5 h-3.5 text-amber-300"></i> Credits &amp; Top-up</button>
+          <button type="button" id="btnAdminLink" class="hidden w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/10 text-left"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-rose-300"></i> Admin</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav id="mobileTabs" class="lg:hidden shrink-0 flex gap-1 p-1.5 border-b border-white/5 bg-ink-900">
+    <button data-mtab="chat" type="button"><i data-lucide="message-square" class="w-3.5 h-3.5"></i> Chat</button>
+    <button data-mtab="code" type="button"><i data-lucide="code-2" class="w-3.5 h-3.5"></i> Code</button>
+    <button data-mtab="preview" type="button"><i data-lucide="play" class="w-3.5 h-3.5"></i> Preview</button>
+  </nav>
+
+  <div class="flex-1 min-h-0 flex relative">
+    <div id="drawerOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"></div>
+
+    <!-- ===== Sidebar: New conversation · Session · Models · Tools ===== -->
+    <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-[86vw] max-w-[340px] lg:w-72 lg:max-w-none shrink-0 -translate-x-full lg:translate-x-0 bg-ink-900 border-r border-white/5 flex flex-col overflow-hidden">
+      <div class="h-14 lg:hidden shrink-0 flex items-center justify-between px-4 border-b border-white/5">
+        <span class="font-semibold text-sm">SAIM Studio Menu</span>
+        <button type="button" id="btnCloseDrawer" class="ibtn" aria-label="Close"><i data-lucide="x"></i></button>
+      </div>
+
+      <div class="sidebar-top">
+        <button type="button" id="btnNewChat" class="new-chat"><i data-lucide="plus"></i><span>New conversation</span><kbd class="kbd-hint">Ctrl K</kbd></button>
+        <label class="search-box chat-search" for="chatSearch"><i data-lucide="search"></i><input id="chatSearch" type="search" placeholder="Search chats" autocomplete="off" aria-label="Search chats" /></label>
+      </div>
+
+      <div class="sidebar-scroll">
+        <nav class="side-section side-nav" aria-label="Features">
+          <div class="side-heading">Workspace</div>
+          <button type="button" class="nav-item" data-proxy="#btnAutoBuild"><i data-lucide="layers"></i><span>Website Builder</span><em>AUTO</em></button>
+          <button type="button" class="nav-item" data-proxy="#btnAutoAgent"><i data-lucide="wand-sparkles"></i><span>Multi-Agent Pipeline</span></button>
+          <button type="button" class="nav-item" data-proxy="#btnVoiceMode"><i data-lucide="audio-lines"></i><span>Voice Chat</span><em>BN · EN</em></button>
+          <button type="button" class="nav-item" data-open="#modalPrompts"><i data-lucide="book-open"></i><span>Prompt Library</span></button>
+          <button type="button" class="nav-item" data-open="#modalFeatures"><i data-lucide="cpu"></i><span>AI Systems</span></button>
+          <button type="button" class="nav-item" data-proxy="#btnWalletOpen"><i data-lucide="wallet"></i><span>Credits &amp; Plan</span></button>
+        </nav>
+
+        <div class="side-section session-section">
+          <div class="side-heading-row"><span class="side-heading">Session</span><button type="button" id="btnClearAllChats" class="text-btn mini">Clear all</button></div>
+          <div id="chatHistoryList" class="history-list"></div>
+        </div>
+
+        <details class="model-browser" id="modelBrowser">
+          <summary class="model-browser-head">
+            <div class="side-heading">Models</div>
+            <span class="flex items-center gap-1.5"><span id="modelCount"></span><i data-lucide="chevron-down" class="mb-chev"></i></span>
+          </summary>
+
+          <!-- Access mode: Credits (main, prepaid) | My API Key (existing, your own key) -->
+          <div id="accessModeSwitch" class="flex p-1 rounded-xl bg-ink-800 text-xs mb-2" role="tablist" aria-label="Access mode">
+            <button type="button" role="tab" data-access="credits" class="acc-tab flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 rounded-lg font-medium text-zinc-500 hover:text-zinc-300"><i data-lucide="coins" class="w-3.5 h-3.5"></i> Credits</button>
+            <button type="button" role="tab" data-access="byok" class="acc-tab flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 rounded-lg font-medium text-zinc-500 hover:text-zinc-300"><i data-lucide="key" class="w-3.5 h-3.5"></i> My API Key</button>
+          </div>
+          <div id="accessModeHint" class="hint !mt-0 mb-2"></div>
+
+          <!-- ============================================ -->
+          <!-- SAIM FREE TIER — always visible, auto-enabled -->
+          <!-- ============================================ -->
+          <div id="saimFreeTierCard" class="saim-free-card saim-card-hidden" aria-hidden="true" data-model-id="saim_free" data-tier="free" data-tokens="50000" role="button" tabindex="0" aria-label="Select SAIM Free">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2 min-w-0">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 grid place-items-center shrink-0">
+                  <i data-lucide="zap" class="w-4 h-4 text-white"></i>
+                </div>
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <span class="font-semibold text-sm text-white truncate">SAIM Free</span>
+                    <span class="saim-free-badge">
+                      <i data-lucide="check" class="w-2.5 h-2.5"></i>
+                      Always On
+                    </span>
+                  </div>
+                  <div class="text-[10px] text-zinc-400 mt-0.5 truncate">Free tier · Auto-enabled for all users</div>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="saim-free-tokens" id="saimFreeTokensDisplay">50,000 / 50,000 tokens</span>
+              <button type="button" id="btnSelectSaimFree" class="text-[10px] font-semibold px-2 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30 transition">
+                Select
+              </button>
+            </div>
+            <div class="saim-free-progress">
+              <div class="saim-free-progress-bar" id="saimFreeProgressBar" style="width: 100%"></div>
+            </div>
+          </div>
+
+          <div class="flex p-1 rounded-xl bg-ink-800 text-xs">
+            <button type="button" data-tab="priority" class="model-tab flex-1 py-1.5 rounded-lg font-medium">Priority Chain</button>
+            <button type="button" data-tab="all" class="model-tab flex-1 py-1.5 rounded-lg font-medium">All Models</button>
+          </div>
+          <label class="search-box" for="modelSearch"><i data-lucide="search"></i><input id="modelSearch" type="search" placeholder="Find a model" autocomplete="off" aria-label="Filter models" /></label>
+          <div class="flex items-center gap-1.5 mt-2">
+            <button id="btnAutoMode" type="button"></button>
+            <div class="flex flex-1 p-0.5 rounded-lg bg-ink-800 text-[11px]"><button type="button" data-price="all">All</button><button type="button" data-price="free">Free</button><button type="button" data-price="paid">Paid</button></div>
+            <button type="button" id="btnSyncModels" class="ibtn sync-btn" title="Sync models" aria-label="Sync models"><i data-lucide="refresh-cw"></i></button>
+          </div>
+          <div id="modelList" class="model-list space-y-1.5"></div>
+        </details>
+      </div>
+
+      <details class="side-foot">
+        <summary class="side-heading">Tools</summary>
+        <div class="tool-grid">
+          <button type="button" data-action="keys" class="side-link"><i data-lucide="key"></i>API Keys<span class="tool-state">(<span id="keyCount">0</span>)</span></button>
+          <button type="button" data-open="#modalPatch" class="side-link"><i data-lucide="binary"></i>Patch</button>
+          <button type="button" id="btnExportChat" class="side-link"><i data-lucide="file-down"></i>Export chat</button>
+          <button type="button" data-open="#modalShortcuts" class="side-link"><i data-lucide="keyboard"></i>Shortcuts</button>
+          <button type="button" data-action="settings" class="side-link"><i data-lucide="sliders"></i>Settings</button>
+        </div>
+      </details>
+    </aside>
+
+    <!-- ===== Chat pane ===== -->
+    <section id="chatPane" class="chat-pane flex flex-col flex-1 min-w-0 min-h-0 lg:flex-none lg:w-[42%] lg:max-w-[560px] border-r border-white/5 bg-ink-950">
+
+      <div class="pane-heading chat-heading">
+        <div><span class="eyebrow">Conversation</span><h2>SAIM AI Agent</h2></div>
+        <div class="ab-bar">
+  <button id="btnAutoBuild" type="button" aria-label="Start Auto Website Builder">
+    <svg class="ab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+      <path d="M2 17l10 5 10-5"/>
+      <path d="M2 12l10 5 10-5"/>
+    </svg>
+    <span>Auto Build Website</span>
+    <span class="ab-pulse"></span>
+  </button>
+  <button class="ab-toggle on" id="abToggleAgent" type="button" title="Toggle Agent auto mode">
+    <span class="ab-track"><span class="ab-thumb"></span></span>
+    <span>Agent ON</span>
+  </button>
+      </div>
+        <button type="button" id="btnClear" class="text-btn" title="Clear chat" aria-label="Clear chat"><i data-lucide="trash-2"></i>Clear</button>
+      </div>
+
+      <div id="handoffStrip" class="hidden shrink-0 px-3.5 py-1.5 bg-purple-950/40 border-b border-purple-500/20 text-[11px] flex items-center justify-between text-purple-200">
+        <div class="flex items-center gap-1.5 truncate">
+          <i data-lucide="git-merge" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i>
+          <span id="handoffStatusText" class="truncate font-mono">Supervisor Active</span>
+        </div>
+        <span id="tokensIndicator" class="text-[10px] font-mono text-zinc-400 shrink-0">0 tok</span>
+      </div>
+
+      <div id="chatScroll" class="chat-scroll flex-1 min-h-0 overflow-y-auto px-3 sm:px-5 py-5 space-y-5"></div>
+      <div class="empty-hero" aria-hidden="false">
+        <div class="eh-mark"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+        <h3>What do you want to build?</h3>
+        <p>Describe it in Bangla or English. SAIM Agent writes, previews and fixes the code for you.</p>
+        <div class="eh-chips">
+          <button type="button" data-quick="Build a modern SaaS landing page with hero, features, pricing and FAQ sections">Landing page</button>
+          <button type="button" data-quick="Build an admin dashboard with sidebar, KPI cards and a sales chart">Dashboard</button>
+          <button type="button" data-quick="Review the current code, find bugs and fix them with patch blocks">Fix bugs</button>
+        </div>
+        <div class="eh-guide" aria-label="How to use SAIM">
+          <div class="eh-step"><b><i>1</i>Chat</b><span>Type what you want and press Send. SAIM builds it for you.</span></div>
+          <div class="eh-step"><b><i>2</i>View files</b><span>Open the <strong>Code</strong> tab on the right to see every generated file.</span></div>
+          <div class="eh-step"><b><i>3</i>Download</b><span>Click <strong>Tools → Export ZIP</strong> (top right) to download all files as a ZIP.</span></div>
+        </div>
+      </div>
+
+      <!-- ===== Composer: textarea + single composer-bar row + composer-meta ===== -->
+      <div class="composer-area" style="padding-bottom:max(.75rem,env(safe-area-inset-bottom))">
+        <div id="attachList" class="attach-list flex flex-wrap gap-2 mb-2 empty:hidden"></div>
+        <div class="composer qwen-bar glass">
+          <textarea id="promptInput" rows="1" aria-label="Prompt" placeholder="Instruct SAIM Agent... (e.g. Build a modern crypto dashboard with charts)"></textarea>
+          <div id="composerBar" class="composer-bar">
+            <div id="composerTools" class="composer-tools">
+              <input id="fileInput" type="file" class="hidden" multiple accept=".txt,.md,.js,.ts,.json,.html,.css,.py,.csv" />
+              <button type="button" id="btnUpload" class="ibtn" title="Attach file" aria-label="Attach file"><i data-lucide="paperclip"></i></button>
+              <button id="btnMic" type="button" class="ibtn" title="Dictate" aria-label="Dictate"><i data-lucide="mic"></i></button>
+              <button id="btnVoiceMode" type="button" class="ibtn" title="Voice conversation" aria-label="Voice conversation"><i data-lucide="audio-lines"></i></button>
+              <button id="btnSpeak" type="button" class="ibtn" title="Read replies aloud" aria-label="Read replies aloud"><i data-lucide="volume-2"></i></button>
+              <button id="btnVoiceLang" type="button" class="lang-btn" title="Voice language">EN</button>
+            </div>
+            <div id="composerActions" class="composer-actions">
+              <button type="button" id="btnAbortStream" class="hidden stop-btn" title="Stop generating" aria-label="Stop generating"><i data-lucide="square"></i></button>
+              <div class="relative" id="composerModelWrap">
+                <button type="button" id="btnComposerModel" class="composer-model-select" aria-label="Select AI model" aria-haspopup="menu" aria-expanded="false"><i data-lucide="cpu"></i><span id="composerModelName">SAIM Free</span><i data-lucide="chevron-down" class="chevron"></i></button>
+                <div id="composerModelDropdown" class="composer-model-dropdown hidden" role="menu" aria-label="AI models"></div>
+              </div>
+              <button id="btnAutoAgent" type="button" class="auto-btn" title="Auto — multi-agent pipeline" aria-label="Auto"><i data-lucide="wand-sparkles"></i><span class="btn-label">Auto</span></button>
+              <button type="button" id="btnSend" class="send-btn" title="Generate" aria-label="Generate"><i data-lucide="arrow-up"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="composer-meta">
+          <!-- Model disclaimer (Claude-style) -->
+          <span id="modelDisclaimer" class="model-disclaimer"><strong id="disclaimerModelName">SAIM Free</strong> can make mistakes. Check important info.</span>
+          <span class="composer-chips">
+            <!-- SAIM Free token chip (data comes from the server) -->
+            <span id="composerFreeTokenChip" class="free-token-chip" title="SAIM Free tokens remaining">
+              <i data-lucide="zap" class="w-3 h-3"></i>
+              <span id="composerFreeTokenCount">50,000</span>
+            </span>
+            <span id="keyGuardChip" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-zinc-400 whitespace-nowrap truncate max-w-[9rem] cursor-pointer hover:text-zinc-200" role="button" tabindex="0">⚡ Active: …</span>
+            <span id="speedToggle" class="hidden items-center gap-0.5"></span>
+            <span id="costEstimate" class="hidden text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-300 whitespace-nowrap"></span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Code / Preview pane ===== -->
+    <section id="codePane" class="code-pane hidden lg:flex flex-col flex-1 min-w-0 min-h-0 bg-ink-900">
+
+      <!-- ===== Single toolbar: Code|Preview on the left · file name in the middle · small icon buttons + Tools on the right ===== -->
+      <div class="editor-toolbar">
+        <div class="view-tabs hidden lg:flex" role="tablist" aria-label="Editor view">
+          <button type="button" data-view="code" class="view-tab" role="tab"><i data-lucide="code-2"></i>Code</button>
+          <button type="button" data-view="preview" class="view-tab" role="tab"><i data-lucide="play"></i>Preview</button>
+        </div>
+        <span id="activeFileLabel" class="active-file-label">index.html</span>
+        <span id="errBadge" class="hidden shrink-0 inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-red-500/15 text-red-300"><i data-lucide="alert-triangle" class="w-3 h-3"></i><span id="errCount">0</span></span>
+        <div class="editor-actions">
+          <button type="button" id="btnUndo" class="ibtn" title="Undo" aria-label="Undo"><i data-lucide="undo-2"></i></button>
+          <button type="button" id="btnRedo" class="ibtn" title="Redo" aria-label="Redo"><i data-lucide="redo-2"></i></button>
+          <button type="button" id="btnRun" class="ibtn" title="Re-run" aria-label="Re-run"><i data-lucide="rotate-cw"></i></button>
+          <button type="button" id="btnCopy" class="ibtn" title="Copy" aria-label="Copy"><i data-lucide="copy"></i></button>
+          <button type="button" id="btnDownload" class="ibtn" title="Download" aria-label="Download"><i data-lucide="download"></i></button>
+          <button type="button" id="btnFullscreen" class="ibtn" title="Fullscreen" aria-label="Fullscreen"><i data-lucide="maximize-2"></i></button>
+          <button type="button" id="btnTools" class="ibtn tools-trigger" title="Tools" aria-label="Tools" aria-haspopup="menu" aria-expanded="false" aria-controls="toolsMenu"><i data-lucide="sliders-horizontal"></i><span id="toolsDot" class="tools-dot" aria-hidden="true"></span></button>
+        </div>
+      </div>
+      <input id="projectZipInput" type="file" accept=".zip,application/zip" class="hidden" aria-label="Choose project ZIP" />
+
+      <!-- ===== Tools menu (dropdown on desktop, bottom sheet on mobile) — js/tools-menu.js opens/closes it ===== -->
+      <div id="toolsBackdrop" class="tools-backdrop hidden" aria-hidden="true"></div>
+      <div id="toolsMenu" class="tools-menu hidden" role="menu" aria-label="Workspace tools">
+        <div class="tools-sheet-head"><strong>Tools</strong><button type="button" id="btnToolsClose" class="ibtn" aria-label="Close tools"><i data-lucide="x"></i></button></div>
+        <div id="ideBar" class="tools-body">
+          <section class="tools-group" aria-label="View">
+            <div class="dropdown-label">View</div>
+            <div class="tools-grid">
+              <button type="button" data-ide-toggle="explorer" class="ide-btn tools-item" title="File Explorer"><i data-lucide="folder-tree"></i><span>Files</span><span class="tool-state"></span></button>
+              <button type="button" data-ide-toggle="terminal" class="ide-btn tools-item" title="Terminal"><i data-lucide="terminal"></i><span>Terminal</span><span class="tool-state"></span></button>
+            </div>
+          </section>
+          <section class="tools-group" aria-label="Build and Deploy">
+            <div class="dropdown-label">Build and Deploy</div>
+            <div class="tools-grid">
+              <button type="button" data-ide-action="deploy" class="ide-btn tools-item"><i data-lucide="rocket"></i><span>1-Click Deploy</span></button>
+              <button type="button" data-ide-action="pwa" class="ide-btn tools-item"><i data-lucide="smartphone"></i><span>Convert to PWA</span></button>
+              <button type="button" id="btnExportProject" class="ide-btn tools-item" title="Download all project files as ZIP"><i data-lucide="package-open"></i><span>Export ZIP</span></button>
+              <button type="button" id="btnImportProject" class="ide-btn tools-item" title="Import a project ZIP"><i data-lucide="folder-input"></i><span>Import ZIP</span></button>
+              <button type="button" data-open="#modalGithub" class="ide-btn tools-item" title="GitHub"><i data-lucide="github"></i><span>GitHub</span></button>
+            </div>
+          </section>
+          <section class="tools-group" aria-label="Quality">
+            <div class="dropdown-label">Quality</div>
+            <div class="tools-grid">
+              <button type="button" data-ide-action="security" class="ide-btn tools-item"><i data-lucide="shield-check"></i><span>Security Audit</span></button>
+              <button type="button" data-ide-action="seo" class="ide-btn tools-item"><i data-lucide="gauge"></i><span>SEO Optimize</span></button>
+              <button type="button" id="btnAgentVerify" class="ide-btn tools-item" title="Validate all project files"><i data-lucide="list-checks"></i><span>Verify Project</span></button>
+              <button type="button" id="btnFix" class="ide-btn tools-item"><i data-lucide="wand-sparkles"></i><span>Auto Fix</span></button>
+              <button type="button" data-ide-flag="heal" class="ide-btn tools-item" title="Auto-heal preview errors"><i data-lucide="heart-pulse"></i><span>Auto-Heal</span><span class="tool-state"></span></button>
+            </div>
+          </section>
+          <section class="tools-group" aria-label="AI Tools">
+            <div class="dropdown-label">AI Tools</div>
+            <div class="tools-grid">
+              <button type="button" data-ide-action="refactor" class="ide-btn tools-item"><i data-lucide="blocks"></i><span>Refactor</span></button>
+              <button type="button" data-ide-action="docs" class="ide-btn tools-item"><i data-lucide="book-open"></i><span>README</span></button>
+              <button type="button" data-ide-action="tests" class="ide-btn tools-item"><i data-lucide="flask-conical"></i><span>AI Tests</span></button>
+              <button type="button" data-ide-action="schema" class="ide-btn tools-item"><i data-lucide="database"></i><span>DB Schema</span></button>
+              <button type="button" data-ide-action="vision" class="ide-btn tools-item"><i data-lucide="image"></i><span>Image→Code</span></button>
+              <button type="button" data-ide-flag="ghost" class="ide-btn tools-item" title="Ghost text autocomplete (Tab to accept)"><i data-lucide="ghost"></i><span>Ghost</span><span class="tool-state"></span></button>
+            </div>
+          </section>
+          <section class="tools-group" aria-label="Project">
+            <div class="dropdown-label">Project</div>
+            <div class="tools-grid">
+              <button type="button" data-ide-action="history" class="ide-btn tools-item"><i data-lucide="history"></i><span>Version History</span></button>
+              <button type="button" id="btnAgentAutomation" class="ide-btn tools-item" title="Checkpoints, recovery and automation history"><i data-lucide="history"></i><span>Automation</span></button>
+              <button type="button" id="btnAgentAuto" class="ide-btn tools-item on" aria-pressed="true" title="Automatically validate AI changes"><i data-lucide="workflow"></i><span>Autopilot</span><span class="tool-state"></span></button>
+              <button type="button" data-ide-action="node" class="ide-btn tools-item"><i data-lucide="box"></i><span>Boot Node</span></button>
+              <button type="button" data-ide-action="sync" class="ide-btn tools-item"><i data-lucide="users"></i><span>Live Sync</span></button>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- agent run bar: thin status line -->
+      <div id="agentRunBar" class="agent-runbar" role="status" aria-live="polite">
+        <span id="agentStatusDot" class="agent-status-dot" aria-hidden="true"></span>
+        <span id="agentRunText">Workspace ready · local project persistence on</span>
+        <span id="agentFileCount" class="agent-file-count">1 file</span>
+      </div>
+
+      <div class="editor-stage flex-1 min-h-0 relative">
+        <div id="codeView" class="code-view absolute inset-0 flex flex-col">
+         <div id="editorRow" class="editor-row flex flex-1 min-h-0">
+          <aside id="fileExplorer" class="file-explorer hidden" aria-label="Project files">
+            <div class="explorer-head">
+              <span>Files</span>
+              <div>
+                <button type="button" id="btnNewFile" class="ibtn" title="New file" aria-label="New file"><i data-lucide="file-plus"></i></button>
+                <button type="button" id="btnDelFile" class="ibtn" title="Delete active file" aria-label="Delete active file"><i data-lucide="trash-2"></i></button>
+              </div>
+            </div>
+            <div id="fileTree" class="file-tree"></div>
+          </aside>
+          <div id="lineNums" class="line-nums" aria-hidden="true"></div>
+          <textarea id="codeEditor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Code editor"></textarea>
+         </div>
+         <div id="terminalPanel" class="terminal-panel hidden">
+           <div class="terminal-head">
+             <span><i data-lucide="terminal"></i> Terminal <span id="termStatus" class="term-status">(local shell)</span></span>
+             <div>
+               <button type="button" id="btnTermClear" class="ibtn" title="Clear" aria-label="Clear terminal"><i data-lucide="eraser"></i></button>
+               <button type="button" data-ide-toggle="terminal" class="ibtn" title="Close" aria-label="Close terminal"><i data-lucide="x"></i></button>
+             </div>
+           </div>
+           <div id="termOut" class="terminal-output"></div>
+           <div class="terminal-input">
+             <span>$</span>
+             <input id="termIn" type="text" autocomplete="off" spellcheck="false" aria-label="Terminal input" placeholder="help" />
+           </div>
+         </div>
+        </div>
+        <div id="previewView" class="preview-view absolute inset-0 hidden bg-white">
+          <iframe id="previewFrame" title="Live preview" class="w-full h-full border-0 bg-white" sandbox="allow-scripts allow-forms allow-modals allow-popups allow-downloads"></iframe>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div id="modalLogin" class="modal" role="dialog" aria-modal="true" aria-label="Login"><div class="bg" data-close></div>
+  <div class="mbox fade-in sm:!max-w-sm">
+    <div class="blob w-48 h-48 bg-purple-600 -top-16 -left-16" style="opacity:.25"></div>
+    <div class="blob w-48 h-48 bg-cyan-500 -bottom-16 -right-16" style="opacity:.2"></div>
+    <button type="button" data-close class="ibtn absolute top-3 right-3 z-10" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button>
+    <div class="relative px-6 pt-10 pb-8 text-center">
+      <div class="w-16 h-16 mx-auto rounded-3xl bg-gradient-to-br from-purple-500 to-cyan-400 grid place-items-center shadow-xl shadow-purple-500/30 mb-5"><i data-lucide="sparkles" class="w-8 h-8 text-white"></i></div>
+      <h3 class="text-xl font-extrabold">Welcome to <span class="grad-text">SAIM AI AGENT</span></h3>
+      <p class="text-xs text-zinc-400 mt-1.5 mb-7">Login or sign up to continue</p>
+      <div class="space-y-3">
+        <button type="button" data-auth="google" class="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-white text-zinc-900 text-sm font-semibold hover:bg-zinc-100 transition"><svg class="w-4 h-4" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 13 4 4 13 4 24s9 20 20 20 20-9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg> Continue with Google</button>
+        <div class="flex items-center gap-3 text-[10px] text-zinc-600"><span class="flex-1 h-px bg-white/10"></span>OR<span class="flex-1 h-px bg-white/10"></span></div>
+        <button type="button" data-auth="github" class="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[#24292f] border border-white/10 text-white text-sm font-semibold hover:bg-[#2f353c] transition"><i data-lucide="github" class="w-4 h-4"></i> Continue with GitHub</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalPrompts" class="modal" role="dialog" aria-modal="true" aria-label="Prompt Library"><div class="bg" data-close></div>
+  <div class="mbox mbox-wide fade-in">
+    <div class="mhead"><h3 class="font-semibold text-base">Prompt Library</h3><button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+    <div class="mbody">
+      <p class="text-xs text-zinc-400">Pick a prompt and it will be placed straight into the message box.</p>
+      <div class="prompt-cat"><h4><i data-lucide="layout-template"></i> Website &amp; UI</h4>
+        <button type="button" data-close data-quick="Build a modern SaaS landing page with hero, features, pricing and FAQ sections">SaaS landing page</button>
+        <button type="button" data-close data-quick="Build a responsive portfolio website with projects grid, about and contact form">Portfolio website</button>
+        <button type="button" data-close data-quick="Build an admin dashboard with sidebar, KPI cards and a sales chart">Admin dashboard</button>
+        <button type="button" data-close data-quick="Build an e-commerce product page with gallery, size selector and add to cart">E-commerce product page</button>
+      </div>
+      <div class="prompt-cat"><h4><i data-lucide="code"></i> Code &amp; Debug</h4>
+        <button type="button" data-close data-quick="Review the current code, find bugs and fix them with patch blocks">Find &amp; fix bugs</button>
+        <button type="button" data-close data-quick="Make the current page fully responsive for mobile, tablet and desktop">Make it responsive</button>
+        <button type="button" data-close data-quick="Add dark mode toggle to the current page">Add dark mode</button>
+        <button type="button" data-close data-quick="Explain the current code step by step in simple language">Explain the code</button>
+      </div>
+      <div class="prompt-cat"><h4><i data-lucide="pen-line"></i> Writing &amp; Ideas</h4>
+        <button type="button" data-close data-quick="Give me 10 creative names and slogans for my business">Business names and slogans</button>
+        <button type="button" data-close data-quick="Write a professional email to a client about a project delay">Professional email</button>
+        <button type="button" data-close data-quick="Summarize this text into 5 key bullet points:">Summarize text</button>
+        <button type="button" data-close data-quick="Translate the following into natural Bangla:">Translate to Bangla</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalFeatures" class="modal" role="dialog" aria-modal="true" aria-label="AI Systems"><div class="bg" data-close></div>
+  <div class="mbox mbox-wide fade-in">
+    <div class="mhead"><h3 class="font-semibold text-base">SAIM AI — All Systems</h3><button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+    <div class="mbody">
+      <ol class="flow-steps" aria-label="How SAIM works">
+        <li><b>1</b><span>Input</span><small>Text, voice, files</small></li>
+        <li><b>2</b><span>Model routing</span><small>Free / Credits / Own key</small></li>
+        <li><b>3</b><span>Agent pipeline</span><small>Plan → code → review</small></li>
+        <li><b>4</b><span>Output</span><small>Chat, code, live preview</small></li>
+      </ol>
+      <div class="sys-grid">
+        <div class="sys-card"><i data-lucide="message-square-text"></i><h4>Chat engine</h4><p>Streaming replies, Markdown, code blocks, session history</p></div>
+        <div class="sys-card"><i data-lucide="git-merge"></i><h4>Multi-model chain</h4><p>Priority chain with automatic fallback and AI handoff</p></div>
+        <div class="sys-card"><i data-lucide="wand-sparkles"></i><h4>Multi-agent pipeline</h4><p>Planner, coder and reviewer agents build step by step</p></div>
+        <div class="sys-card"><i data-lucide="layers"></i><h4>Website builder</h4><p>Builds complete websites automatically from one prompt</p></div>
+        <div class="sys-card"><i data-lucide="code-xml"></i><h4>Code editor</h4><p>Multi-file workspace with undo, redo and surgical patch</p></div>
+        <div class="sys-card"><i data-lucide="monitor-play"></i><h4>Live preview</h4><p>Instantly run generated sites in the preview pane</p></div>
+        <div class="sys-card"><i data-lucide="mic"></i><h4>Voice AI</h4><p>Dictation, voice conversation and read-aloud in BN and EN</p></div>
+        <div class="sys-card"><i data-lucide="paperclip"></i><h4>File context</h4><p>Attach code and text files for the AI to read</p></div>
+        <div class="sys-card"><i data-lucide="github"></i><h4>Export &amp; GitHub</h4><p>Download ZIP or push the project to a GitHub repo</p></div>
+        <div class="sys-card"><i data-lucide="coins"></i><h4>Credits &amp; BYOK</h4><p>Free tokens, paid credits, or use your own API keys</p></div>
+        <div class="sys-card"><i data-lucide="shield-check"></i><h4>Secure accounts</h4><p>Firebase login with server-side key protection</p></div>
+        <div class="sys-card"><i data-lucide="sliders"></i><h4>Settings</h4><p>Agent persona, model filters, speed and workspace options</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalShortcuts" class="modal" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts"><div class="bg" data-close></div>
+  <div class="mbox fade-in">
+    <div class="mhead"><h3 class="font-semibold text-base">Keyboard Shortcuts</h3><button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+    <div class="mbody">
+      <dl class="shortcut-list">
+        <div><dt>New conversation</dt><dd><kbd>Ctrl</kbd><kbd>K</kbd></dd></div>
+        <div><dt>Focus message box</dt><dd><kbd>/</kbd></dd></div>
+        <div><dt>Search chats</dt><dd><kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>F</kbd></dd></div>
+        <div><dt>Send message</dt><dd><kbd>Enter</kbd></dd></div>
+        <div><dt>New line</dt><dd><kbd>Shift</kbd><kbd>Enter</kbd></dd></div>
+        <div><dt>Undo / Redo code</dt><dd><kbd>Ctrl</kbd><kbd>Z</kbd> <kbd>Ctrl</kbd><kbd>Y</kbd></dd></div>
+        <div><dt>Show shortcuts</dt><dd><kbd>Ctrl</kbd><kbd>/</kbd></dd></div>
+        <div><dt>Close dialog</dt><dd><kbd>Esc</kbd></dd></div>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<div id="modalPatch" class="modal" role="dialog" aria-modal="true" aria-label="Surgical Code Patch"><div class="bg" data-close></div>
+  <div class="mbox fade-in">
+    <div class="mhead"><h3 class="font-semibold text-base">Surgical Code Patch</h3><button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+    <div class="mbody">
+      <div><label class="lbl" for="patchFind">Find:</label><textarea id="patchFind" rows="3" class="inp font-mono" placeholder="Exact code or text"></textarea></div>
+      <div><label class="lbl" for="patchReplace">Replace with:</label><textarea id="patchReplace" rows="3" class="inp font-mono" placeholder="New code or text"></textarea></div>
+    </div>
+    <div class="mfoot"><button type="button" id="btnApplyPatch" class="pbtn">Apply Patch</button></div>
+  </div>
+</div>
+
+<div id="modalGithub" class="modal" role="dialog" aria-modal="true" aria-label="Push to GitHub"><div class="bg" data-close></div>
+  <div class="mbox fade-in">
+    <div class="mhead"><h3 class="font-semibold text-base">Push to GitHub</h3><button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+    <div class="mbody">
+      <div id="ghAccount" class="text-xs text-zinc-400"></div>
+      <div><label class="lbl" for="ghRepo">Repository</label><input id="ghRepo" type="text" class="inp font-mono" placeholder="my-app or owner/my-app" autocomplete="off" autocapitalize="off" spellcheck="false" /></div>
+      <div><label class="lbl" for="ghPath">File path</label><input id="ghPath" type="text" class="inp font-mono" value="index.html" autocomplete="off" autocapitalize="off" spellcheck="false" /></div>
+      <div><label class="lbl" for="ghMsg">Commit message</label><input id="ghMsg" type="text" class="inp" placeholder="Update from SAIM AI AGENT" /></div>
+      <label class="flex items-center gap-2 text-xs text-zinc-300"><input id="ghPrivate" type="checkbox" class="accent-purple-500" checked /> Private repository</label>
+      <div id="githubResult" class="hidden p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 break-all"></div>
+    </div>
+    <div class="mfoot"><button type="button" id="btnPushGithub" class="pbtn">Push to GitHub</button></div>
+  </div>
+</div>
+
+<div id="modalSettings" class="modal" role="dialog" aria-modal="true" aria-label="Workspace Settings"><div class="bg" data-close></div>
+  <div class="mbox fade-in">
+    <div class="mhead"><h3 class="font-semibold text-base">Workspace Settings</h3><button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+    <div class="mbody">
+      <button type="button" data-action="keys" class="w-full flex items-center gap-3 p-3 rounded-2xl text-left bg-emerald-500/10 border border-emerald-500/25 hover:bg-emerald-500/15"><i data-lucide="key-round" class="w-4 h-4 text-emerald-300 shrink-0"></i><span class="min-w-0"><span class="block text-xs font-semibold text-emerald-200">Personal API Keys</span><span class="block text-[10.5px] text-zinc-400">Gemini, Claude, OpenAI, DeepSeek, OpenRouter, Groq… synced to your account and restored on every device. Unlocks unlimited project generation.</span></span></button>
+      <div><div class="flex justify-between text-xs mb-1"><label class="font-medium text-zinc-300" for="settingTemp">Temperature</label><span id="tempValue" class="font-mono text-cyan-400">0.40</span></div><input id="settingTemp" type="range" min="0" max="1" step="0.05" class="w-full accent-cyan-400" /></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div><label class="lbl" for="settingMaxTokens">Max Output Tokens</label><input id="settingMaxTokens" type="number" step="256" class="inp font-mono" /></div>
+        <div><label class="lbl" for="settingTimeout">Idle Timeout (sec)</label><input id="settingTimeout" type="number" min="10" max="300" class="inp font-mono" /></div>
+      </div>
+      <div><label class="lbl" for="settingProxy">CORS Proxy URL (Optional)</label><input id="settingProxy" type="url" class="inp font-mono" placeholder="https://your-cors-proxy.example.com/" /></div>
+      <div><label class="lbl" for="settingSysPrompt">Custom System Prompt</label><textarea id="settingSysPrompt" rows="2" class="inp" placeholder="e.g. Always use Tailwind v3 and produce modern clean UI"></textarea></div>
+    </div>
+    <div class="mfoot"><button type="button" id="btnResetSettings" class="sbtn">Defaults</button><button type="button" id="btnSaveSettings" class="pbtn">Save Settings</button></div>
+  </div>
+</div>
+
+<div id="modalProviders" class="modal" role="dialog" aria-modal="true" aria-label="AI Providers"><div class="bg" data-close></div>
+  <div class="mbox fade-in">
+    <div class="mhead"><h3 class="font-semibold text-base">AI Providers</h3><button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+    <div id="providersBody" class="mbody !gap-2"></div>
+    <div class="mfoot justify-end"><button type="button" data-close class="sbtn">Done</button></div>
+  </div>
+</div>
+
+<div id="modalKey" class="modal" role="dialog" aria-modal="true" aria-label="API key"><div class="bg" data-close></div>
+  <div class="mbox fade-in">
+    <div class="mhead"><div class="min-w-0"><h3 id="inputTitle" class="font-semibold text-sm truncate">Provider</h3><p id="inputSubtitle" class="text-[11px] text-zinc-500 truncate"></p></div><button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+    <div class="mbody">
+      <div id="customEndpointBox" class="hidden"><label class="lbl" for="customEndpointInput">Custom API Base URL:</label><input id="customEndpointInput" type="url" class="inp font-mono" placeholder="http://localhost:11434/v1" /></div>
+      <div class="relative"><input id="providerKeyInput" type="password" autocomplete="off" spellcheck="false" aria-label="API key" class="inp font-mono !pr-10" placeholder="Paste API key" /><button type="button" id="toggleKeyVisibility" class="ibtn absolute right-1 top-1/2 -translate-y-1/2 !p-1.5" aria-label="Show key"><i data-lucide="eye" class="w-3.5 h-3.5"></i></button></div>
+      <div id="providerKeyHelp" class="hint break-all"></div>
+    </div>
+    <div class="mfoot"><button type="button" id="btnRemoveProviderKey" class="sbtn !text-red-300">Remove</button><button type="button" id="btnSaveProviderKey" class="pbtn">Save to Vault</button></div>
+  </div>
+</div>
+
+<div id="assistantBackdrop" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"></div>
+<aside id="assistantPanel" class="fixed top-0 right-0 bottom-0 z-[61] w-full sm:w-[420px] flex flex-col bg-ink-900 border-l border-white/10 shadow-2xl" style="padding-top:env(safe-area-inset-top)">
+  <div class="h-14 shrink-0 flex items-center gap-2 px-4 border-b border-white/5">
+    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-pink-500 to-purple-500 grid place-items-center text-white"><i data-lucide="sparkles" class="w-4 h-4"></i></div>
+    <div class="min-w-0 flex-1">
+      <div class="font-bold text-sm leading-tight text-white">SAIM AI AGENT</div>
+      <div class="text-[10px] text-emerald-400 font-mono">● Online</div>
+    </div>
+    <button type="button" id="guideClearBtn" class="ibtn" title="Reset chat" aria-label="Reset"><i data-lucide="rotate-ccw" class="w-4 h-4"></i></button>
+    <button type="button" id="guideCloseBtn" class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button>
+  </div>
+  <div id="guideScroll" class="flex-1 min-h-0 overflow-y-auto px-4 py-4 space-y-3"></div>
+  <div class="shrink-0 p-3 border-t border-white/5 bg-ink-950/80" style="padding-bottom:max(.75rem,env(safe-area-inset-bottom))">
+    <div class="glass rounded-2xl p-2 focus-within:border-pink-500/50">
+      <textarea id="guideInput" rows="1" aria-label="Ask SAIM AI AGENT" placeholder="Ask SAIM AI AGENT anything..." class="w-full resize-none bg-transparent px-2 py-1.5 text-sm placeholder-zinc-500 focus:outline-none max-h-32"></textarea>
+      <div class="flex items-center justify-between pt-1">
+        <span></span>
+        <button type="button" id="guideSendBtn" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-pink-500/20 to-purple-500/20 text-pink-300 text-xs font-semibold hover:brightness-125 border border-pink-500/30">Send</button>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div id="modalAutoAgent" class="modal" role="dialog" aria-modal="true" aria-label="Autonomous Multi-Agent Pipeline"><div class="bg" data-close></div>
+  <div class="mbox fade-in !max-w-md">
+    <div class="mhead">
+      <h3 class="font-semibold text-sm flex items-center gap-2 text-amber-300"><i data-lucide="network" class="w-4 h-4"></i> Autonomous Multi-Agent Pipeline</h3>
+      <button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button>
+    </div>
+    <div class="mbody bg-ink-950 !p-5 !gap-4">
+      <div id="step-1" class="flex items-start gap-3 opacity-40 transition-opacity duration-300">
+        <div class="step-icon w-7 h-7 rounded-full bg-orange-500/20 text-orange-400 grid place-items-center shrink-0 mt-0.5"><i data-lucide="palette" class="w-3.5 h-3.5"></i></div>
+        <div><div class="text-xs font-semibold text-zinc-200">1. UI/UX &amp; Structure (Claude)</div><div class="step-desc text-[10px] text-zinc-500 mt-0.5">HTML layout, Tailwind CSS, components. Falls back to Gemini.</div></div>
+      </div>
+      <div id="step-2" class="flex items-start gap-3 opacity-40 transition-opacity duration-300">
+        <div class="step-icon w-7 h-7 rounded-full bg-blue-500/20 text-blue-400 grid place-items-center shrink-0 mt-0.5"><i data-lucide="file-json" class="w-3.5 h-3.5"></i></div>
+        <div><div class="text-xs font-semibold text-zinc-200">2. Logic &amp; Interactivity (Gemini)</div><div class="step-desc text-[10px] text-zinc-500 mt-0.5">Full JavaScript logic and event wiring.</div></div>
+      </div>
+      <div id="step-3" class="flex items-start gap-3 opacity-40 transition-opacity duration-300">
+        <div class="step-icon w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 grid place-items-center shrink-0 mt-0.5"><i data-lucide="bug" class="w-3.5 h-3.5"></i></div>
+        <div><div class="text-xs font-semibold text-zinc-200">3. Verification (DeepSeek)</div><div class="step-desc text-[10px] text-zinc-500 mt-0.5">Syntax and logic check. Falls back to OpenRouter, then Gemini.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Auto Website Builder (modal) ============ -->
+<div id="modalAutoBuilder" class="modal" role="dialog" aria-modal="true" aria-label="Auto Website Builder">
+  <div class="bg" data-close></div>
+  <div class="mbox fade-in" style="max-width:520px;">
+    <div class="mhead">
+      <div>
+        <h3 class="font-semibold text-base flex items-center gap-2">
+          <i data-lucide="bot" class="w-5 h-5 text-purple-400"></i>
+          Auto Website Builder
+        </h3>
+        <p class="text-[11px] text-zinc-500 mt-0.5">Design → JS → Review → Firebase</p>
+      </div>
+      <button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button>
+    </div>
+    <div class="mbody">
+      <div class="gem-chain" id="gemChainPills"></div>
+      <div class="ab-pipeline" id="abPipeline">
+        <div class="ab-step" id="ab-step-1">
+          <div class="ab-step-icon"><i data-lucide="palette" class="w-4 h-4"></i></div>
+          <div class="ab-step-body">
+            <div class="ab-step-title">1. Design — Gemini 3.1 Pro Preview</div>
+            <div class="ab-step-desc">Waiting...</div>
+          </div>
+        </div>
+        <div class="ab-step" id="ab-step-2">
+          <div class="ab-step-icon"><i data-lucide="braces" class="w-4 h-4"></i></div>
+          <div class="ab-step-body">
+            <div class="ab-step-title">2. Logic — JavaScript Agent (complete interactions)</div>
+            <div class="ab-step-desc">Waiting...</div>
+          </div>
+        </div>
+        <div class="ab-step" id="ab-step-3">
+          <div class="ab-step-icon"><i data-lucide="shield-check" class="w-4 h-4"></i></div>
+          <div class="ab-step-body">
+            <div class="ab-step-title">3. Bug Review &amp; Auto Fix</div>
+            <div class="ab-step-desc">Waiting...</div>
+          </div>
+        </div>
+        <div class="ab-step" id="ab-step-4">
+          <div class="ab-step-icon"><i data-lucide="flame" class="w-4 h-4"></i></div>
+          <div class="ab-step-body">
+            <div class="ab-step-title">4. Firebase + Free Hosting Guide</div>
+            <div class="ab-step-desc">Waiting...</div>
+          </div>
+        </div>
+      </div>
+      <div id="abFirebaseGuide" class="ab-firebase-guide hidden"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Wallet: plan / top-up / history (wallet-ui.js fills the content) -->
+<div id="modalWallet" class="modal" role="dialog" aria-modal="true" aria-label="Credits"><div class="bg" data-close></div>
+  <div class="mbox fade-in sm:!max-w-xl">
+    <div class="mhead"><h3 class="font-semibold text-base">Credits &amp; Top-up</h3><button type="button" data-close class="ibtn" aria-label="Close"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+    <div id="walletTabs" class="flex gap-1 px-3 pt-3"></div>
+    <div id="walletBody" class="mbody"></div>
+  </div>
+</div>
+
+<!-- Admin page (#/admin) — admin-page.js shows it only for admin claims; real security lives on the server -->
+<div id="adminPage" class="hidden fixed inset-0 z-[70] bg-ink-950 overflow-auto" style="padding-top:env(safe-area-inset-top)">
+  <div class="sticky top-0 z-10 flex items-center gap-2 px-3 h-14 border-b border-white/5 bg-ink-900">
+    <button type="button" id="btnAdminClose" class="ibtn" aria-label="Back"><i data-lucide="arrow-left" class="w-4 h-4"></i></button>
+    <div class="font-bold text-sm">Admin</div>
+    <div id="adminTabs" class="flex gap-1 ml-3 overflow-x-auto noscroll" role="tablist">
+      <button type="button" class="adm-tab active" data-tab="payments" role="tab">Payments</button>
+      <button type="button" class="adm-tab" data-tab="users" role="tab">Users</button>
+      <button type="button" class="adm-tab" data-tab="pricing" role="tab">Pricing</button>
+      <button type="button" class="adm-tab" data-tab="plans" role="tab">Plans</button>
+      <button type="button" class="adm-tab" data-tab="settings" role="tab">Settings</button>
+      <button type="button" class="adm-tab" data-tab="stats" role="tab">Stats</button>
+    </div>
+  </div>
+  <div id="adminBody" class="max-w-5xl w-full mx-auto p-4">
+    <section class="adm-panel" data-panel="payments"><h3 class="adm-h">Pending Payment Requests</h3><div id="admPaymentsBody"></div></section>
+    <section class="adm-panel hidden" data-panel="users"><h3 class="adm-h">Users &amp; Credits</h3>
+      <input id="admUserSearch" type="search" class="adm-inp" placeholder="Search by email or UID" aria-label="Search users" autocomplete="off" />
+      <div id="admUsersBody" class="mt-3"></div>
+    </section>
+    <section class="adm-panel hidden" data-panel="pricing"><h3 class="adm-h">Model Pricing</h3><div id="admPricingBody"></div></section>
+    <section class="adm-panel hidden" data-panel="plans"><h3 class="adm-h">Plans &amp; Margin</h3><div id="admPlansBody"></div></section>
+    <section class="adm-panel hidden" data-panel="settings"><h3 class="adm-h">App Settings</h3><div id="admSettingsBody"></div></section>
+    <section class="adm-panel hidden" data-panel="stats"><h3 class="adm-h">Revenue &amp; Usage</h3><div id="admStatsBody"></div></section>
+  </div>
+</div>
+
+<div id="modalAgentAutomation" class="modal" role="dialog" aria-modal="true" aria-labelledby="agentAutomationTitle">
+  <div class="bg" data-close></div>
+  <div class="mbox fade-in agent-automation-modal">
+    <div class="mhead">
+      <h3 id="agentAutomationTitle" class="font-semibold text-base">Automation &amp; Recovery</h3>
+      <button type="button" data-close class="ibtn" aria-label="Close automation panel"><i data-lucide="x" class="w-4 h-4"></i></button>
+    </div>
+    <div class="mbody">
+      <div class="agent-automation-actions">
+        <button type="button" id="btnAgentCheckpoint" class="ide-btn"><i data-lucide="save" class="w-3.5 h-3.5"></i>Create checkpoint</button>
+        <button type="button" id="btnAgentDoctor" class="ide-btn !text-cyan-300"><i data-lucide="list-checks" class="w-3.5 h-3.5"></i>Verify + checkpoint</button>
+      </div>
+      <label class="agent-automation-toggle" for="agentAutoCheckpoint">
+        <input id="agentAutoCheckpoint" type="checkbox" checked />
+        <span>Save an automatic recovery point before AI and project changes</span>
+      </label>
+      <div class="agent-automation-grid">
+        <section aria-labelledby="agentCheckpointsTitle">
+          <h4 id="agentCheckpointsTitle">Project checkpoints</h4>
+          <div id="agentCheckpointList" class="agent-history-list"></div>
+        </section>
+        <section aria-labelledby="agentRunsTitle">
+          <h4 id="agentRunsTitle">Automation history</h4>
+          <div id="agentRunHistory" class="agent-history-list"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="loginBadge" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+<div id="toast" role="status" aria-live="polite" class="fixed left-1/2 -translate-x-1/2 bottom-6 z-[95] pointer-events-none opacity-0 translate-y-3 transition-all duration-300 px-4 py-2 rounded-xl glass text-xs font-medium shadow-2xl max-w-[90vw] text-center"></div>
+
+<!-- Load order matters: config → models → wallet-client → free-tier → main → wallet-ui → saim-free → gemini-chain → auto-builder → admin-page → router -->
+<script src="js/dialog.js"></script>
+<script src="js/config.js"></script>
+<script src="js/models.js"></script>
+<script src="js/wallet-client.js"></script>
+<script src="js/free-tier.js"></script>
+<script src="js/chat-cards.js"></script>
+<script src="js/agent-core.js"></script>
+<script src="js/main.js"></script>
+<script src="js/wallet-ui.js"></script>
+<script src="js/saim-free.js"></script>
+<script src="js/gemini-chain.js"></script>
+<script src="js/auto-builder.js"></script>
+<script src="js/vendor/jszip.min.js"></script>
+<script src="js/agent-workspace.js"></script>
+<script src="js/admin-page.js"></script>
+<script src="js/router.js"></script>
+<script src="js/ui-settings.js"></script>
+<script src="js/tools-menu.js"></script>
+<script src="js/composer-model.js"></script>
+<script src="js/agent-power.js"></script>
+<script src="js/preview-mode.js"></script>
+<script src="js/extras.js"></script>
+<script src="js/memory-plus.js"></script>
+<script src="js/version-history.js"></script>
+<script src="js/mcp.js"></script>
+<script src="js/team-mode.js"></script>
+<script src="js/scheduler.js"></script>
+<script src="js/quality-tools.js"></script>
+<script src="js/image-tools.js"></script>
+<script src="js/video-studio.js"></script>
+<script src="js/growth.js"></script>
+<script src="js/usage-insights.js"></script>
+<script>document.querySelectorAll('.empty-hero [data-quick]').forEach(function(b){b.addEventListener('click',function(){var t=document.getElementById('promptInput');if(!t)return;t.value=b.dataset.quick;t.dispatchEvent(new Event('input',{bubbles:true}));t.focus();});});</script>
+<script>
+  /* Light/dark theme toggle. Dark is the default; the choice is saved. */
+  (function () {
+    var root = document.documentElement, btn = document.getElementById('btnThemeToggle');
+    function isLight() { return root.getAttribute('data-theme') === 'light'; }
+    function sync() {
+      if (!btn) return;
+      btn.innerHTML = '<i data-lucide="' + (isLight() ? 'moon' : 'sun') + '"></i>';
+      if (window.lucide) { try { lucide.createIcons(); } catch (e) {} }
+    }
+    if (btn) btn.addEventListener('click', function () {
+      var next = isLight() ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('saim-theme', next); } catch (e) {}
+      sync();
+    });
+    sync();
+  })();
+</script>
+</body>
+</html>
